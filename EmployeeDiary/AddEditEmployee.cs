@@ -36,16 +36,31 @@ namespace EmployeeDiary
 
             else
             {
+                var employeeListTmp = new List<Employee>();
+                employeeListTmp = _fileHelper.DeserializeJSONFromFile();
+                if (employeeListTmp.Count == 0)
+                {
+                    _employeeId = 1;
+                }
+                else
+                {
+                    _employeeId = employeeListTmp[employeeListTmp.Count - 1].EmployeeId + 1;
+
+                }
                 _isNewUser = true;
+                tbId.Text = _employeeId.ToString();
             }
 
-            
+
             FillTextBoxes();
         }
 
         private void FillTextBoxes()
         {
-            tbId.Text = _employee.EmployeeId.ToString();
+            if (!_isNewUser)
+            {
+                tbId.Text = _employee.EmployeeId.ToString();
+            }
             tbFirstName.Text = _employee.FirstName;
             tbLastName.Text = _employee.LastName;
             tbStreet.Text = _employee.Street;
@@ -65,13 +80,26 @@ namespace EmployeeDiary
         {
             var employeesListFromFile = _fileHelper.DeserializeJSONFromFile();
 
-            AddNewEmployee(employeesListFromFile);
+            if (!_isNewUser)
+            {
+                employeesListFromFile.RemoveAll(x => x.EmployeeId == _employeeId);
+            }
+
+            try
+            {
+                AddNewEmployee(employeesListFromFile);
             Close();
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Uzupełnij Wszystkie kolumny za pomocą poprawnych wartości!");
+            }
         }
 
         private void AddNewEmployee(List<Employee> employees)
         {
-            _employee.EmployeeId =  Int32.Parse(tbId.Text);
+            _employee.EmployeeId = Int32.Parse(tbId.Text);
             _employee.FirstName = tbFirstName.Text;
             _employee.LastName = tbLastName.Text;
             _employee.Street = tbStreet.Text;
@@ -81,6 +109,7 @@ namespace EmployeeDiary
             _employee.AgreementType = tbAgreementType.Text;
             _employee.HiringDate = dtpHiringDate.Value;
             _employee.Salary = Int32.Parse(tbSalary.Text);
+
 
             employees.Add(_employee);
 

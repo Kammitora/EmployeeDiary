@@ -40,16 +40,23 @@ namespace EmployeeDiary
             // 
             // dgvEmployeeData
             // 
+            this.dgvEmployeeData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvEmployeeData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvEmployeeData.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvEmployeeData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEmployeeData.Location = new System.Drawing.Point(34, 41);
             this.dgvEmployeeData.Name = "dgvEmployeeData";
-            this.dgvEmployeeData.Size = new System.Drawing.Size(730, 354);
+            this.dgvEmployeeData.ReadOnly = true;
+            this.dgvEmployeeData.RowHeadersVisible = false;
+            this.dgvEmployeeData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvEmployeeData.Size = new System.Drawing.Size(1201, 409);
             this.dgvEmployeeData.TabIndex = 0;
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(34, 412);
+            this.btnAdd.Location = new System.Drawing.Point(34, 12);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 1;
@@ -59,7 +66,7 @@ namespace EmployeeDiary
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(115, 412);
+            this.btnEdit.Location = new System.Drawing.Point(115, 12);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 23);
             this.btnEdit.TabIndex = 2;
@@ -69,7 +76,7 @@ namespace EmployeeDiary
             // 
             // btnFire
             // 
-            this.btnFire.Location = new System.Drawing.Point(689, 412);
+            this.btnFire.Location = new System.Drawing.Point(1160, 12);
             this.btnFire.Name = "btnFire";
             this.btnFire.Size = new System.Drawing.Size(75, 23);
             this.btnFire.TabIndex = 3;
@@ -84,17 +91,18 @@ namespace EmployeeDiary
             "Wszyscy",
             "Zatrudnieni",
             "Zwolnieni"});
-            this.cmbAllEmployedUnemployed.Location = new System.Drawing.Point(368, 414);
+            this.cmbAllEmployedUnemployed.Location = new System.Drawing.Point(335, 14);
             this.cmbAllEmployedUnemployed.MaxDropDownItems = 3;
             this.cmbAllEmployedUnemployed.Name = "cmbAllEmployedUnemployed";
             this.cmbAllEmployedUnemployed.Size = new System.Drawing.Size(265, 21);
             this.cmbAllEmployedUnemployed.TabIndex = 4;
             this.cmbAllEmployedUnemployed.Text = "Wszyscy";
+            this.cmbAllEmployedUnemployed.SelectedIndexChanged += new System.EventHandler(this.cmbAllEmployedUnemployed_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(244, 417);
+            this.label1.Location = new System.Drawing.Point(211, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(118, 13);
             this.label1.TabIndex = 5;
@@ -104,7 +112,7 @@ namespace EmployeeDiary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1271, 462);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmbAllEmployedUnemployed);
             this.Controls.Add(this.btnFire);

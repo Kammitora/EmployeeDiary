@@ -25,6 +25,7 @@ namespace EmployeeDiary
         {
             employeeList = _fileHelper.DeserializeJSONFromFile();
             dgvEmployeeData.DataSource = employeeList;
+            cmbAllEmployedUnemployed.SelectedIndex = 0;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -101,6 +102,26 @@ namespace EmployeeDiary
         private void MainWindow_Activated(object sender, EventArgs e)
         {
             LoadDataToGrid();
+        }
+
+        private void cmbAllEmployedUnemployed_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var filteredEmployees = new List<Employee>();
+            if (cmbAllEmployedUnemployed.SelectedIndex == 0)
+            {
+                LoadDataToGrid();
+            }
+            else if (cmbAllEmployedUnemployed.SelectedIndex == 1)
+            {
+                filteredEmployees = _fileHelper.DeserializeJSONFromFile().Where(x => x.IsFired == false).ToList();
+                dgvEmployeeData.DataSource = filteredEmployees;
+
+            }
+            else if (cmbAllEmployedUnemployed.SelectedIndex == 2)
+            {
+                filteredEmployees = _fileHelper.DeserializeJSONFromFile().Where(x => x.IsFired == true).ToList();
+                dgvEmployeeData.DataSource = filteredEmployees;
+            }
         }
     }
 }
