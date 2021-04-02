@@ -10,18 +10,23 @@ namespace EmployeeDiary
 {
     public class FileHelper
     {
+        string _path = @"C:\Users\Kamil\Source\Repos\EmployeeDiary1\EmployeeList.txt";
         public void SerializeJSONToFile(List<Employee> employeeList)
         {
             var json = JsonSerializer.Serialize(employeeList);
-            File.WriteAllText(@"C:\Users\Kamil\Source\Repos\EmployeeDiary\jebac.txt", json);
+            File.WriteAllText(_path, json);
         }
 
         public List<Employee> DeserializeJSONFromFile()
         {
+            if (!File.Exists(_path))
+            {
+                return new List<Employee>();
+            }
             var employeeList = new List<Employee>();
-            var json = File.ReadAllText(@"C:\Users\Kamil\Source\Repos\EmployeeDiary\jebac.txt");
+            var json = File.ReadAllText(_path);
             employeeList = JsonSerializer.Deserialize<List<Employee>>(json);
-            return employeeList;
+            return employeeList.OrderBy(x => x.EmployeeId).ToList();
         }
     }
 }

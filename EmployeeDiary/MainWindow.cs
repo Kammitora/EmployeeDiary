@@ -81,6 +81,7 @@ namespace EmployeeDiary
                 return;
             }
 
+            var selectedEmployeeID = dgvEmployeeData.SelectedRows[0].Cells[0].RowIndex;
             var selectedEmployee = dgvEmployeeData.SelectedRows[0];
             var result = MessageBox.Show("Czy na pewno chcesz ustawić status \"zwolniony\" dla tego pracownika? Tej zmiany nie będzie można cofnąć.",
                 "Zwolnij", System.Windows.Forms.MessageBoxButtons.YesNo);
@@ -88,18 +89,18 @@ namespace EmployeeDiary
 
             if (result == DialogResult.Yes)
             {
-                FireAnEmployee((int)selectedEmployee.Cells[0].Value);
-                MessageBox.Show($"Gratulacje! W łatwy sposób {selectedEmployee.Cells[1].Value} {selectedEmployee.Cells[2].Value} został pozbawiony pracy.");
+                FireAnEmployee(selectedEmployeeID);
+                MessageBox.Show($"Gratulacje! W łatwy sposób {selectedEmployee.Cells[1].Value} {selectedEmployee.Cells[2].Value} został pozbawiony pracy."); // zostawiłem tak nie bez powodu. Dlaczego wartości w klamrach tutaj dają null exception?
                 LoadDataToGrid();
             }
         }
 
         private void FireAnEmployee(int id)
         {
-            employeeList[id-1].IsFired = true;
-            employeeList[id-1].FiringDate = DateTime.Today;
+            employeeList[id].IsFired = true;
+            employeeList[id].FiringDate = DateTime.Today;
             _fileHelper.SerializeJSONToFile(employeeList);
-            
+
         }
 
         private void MainWindow_Activated(object sender, EventArgs e)
