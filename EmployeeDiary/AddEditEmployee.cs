@@ -14,23 +14,57 @@ namespace EmployeeDiary
     {
         private Employee _employee = new Employee();
         public FileHelper _fileHelper = new FileHelper();
-        public AddEditEmployee()
+
+        private int _employeeId;
+        private bool _isNewUser;
+
+        public AddEditEmployee(int id = 0)
         {
             InitializeComponent();
+            _employeeId = id;
+            GetEmployeeData();
+            tbFirstName.Select();
         }
 
-        //Do odświeżania danych zaraz po zamknięciu okienek
+        private void GetEmployeeData()
+        {
+            if (_employeeId != 0)
+            {
+                _employee = _fileHelper.DeserializeJSONFromFile().FirstOrDefault(x => x.EmployeeId == _employeeId);
+                _isNewUser = false;
+            }
+
+            else
+            {
+                _isNewUser = true;
+            }
+
+            
+            FillTextBoxes();
+        }
+
+        private void FillTextBoxes()
+        {
+            tbId.Text = _employee.EmployeeId.ToString();
+            tbFirstName.Text = _employee.FirstName;
+            tbLastName.Text = _employee.LastName;
+            tbStreet.Text = _employee.Street;
+            tbPostalCode.Text = _employee.PostalCode;
+            tbCity.Text = _employee.City;
+            tbPosition.Text = _employee.Position;
+            tbAgreementType.Text = _employee.AgreementType;
+            tbSalary.Text = _employee.Salary.ToString();
+        }
 
         private void btnCancelAddingOrEditiingEmployeeData_Click(object sender, EventArgs e)
         {
             Close();
-            
-            
         }
 
         private void btnSaveNewOrEditedEmployeeData_Click(object sender, EventArgs e)
         {
             var employeesListFromFile = _fileHelper.DeserializeJSONFromFile();
+
             AddNewEmployee(employeesListFromFile);
             Close();
         }
@@ -51,8 +85,8 @@ namespace EmployeeDiary
             employees.Add(_employee);
 
             _fileHelper.SerializeJSONToFile(employees);
-
-
         }
+
+
     }
 }

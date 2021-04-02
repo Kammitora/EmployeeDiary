@@ -19,22 +19,6 @@ namespace EmployeeDiary
             InitializeComponent();
             LoadDataToGrid();
             RenameColumns();
-
-            Employee myEmployee = new Employee
-            {
-                EmployeeId = 1,
-                FirstName = "Kamil",
-                LastName = "Kowalski",
-                Street = "Żeromskiego 16/20 m. 31",
-                PostalCode = "01-831",
-                City = "Warszawa",
-                Position = "Junior DevOps Engineer",
-                Salary = 4500,
-                AgreementType = "Umowa o pracę, czas nieokreślony",
-                HiringDate = DateTime.Today,
-                IsFired = false
-            };
-
         }
 
         public void LoadDataToGrid()
@@ -52,7 +36,15 @@ namespace EmployeeDiary
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            var addEditEmployee = new AddEditEmployee();
+
+            if (dgvEmployeeData.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Zaznacz rekord z pracownikiem, jeśli chcesz go edytować.");
+                return;
+            }
+
+            var selectedEmployeeForEditID = dgvEmployeeData.SelectedRows[0].Cells[0].Value;
+            var addEditEmployee = new AddEditEmployee((int)selectedEmployeeForEditID);
             addEditEmployee.Text = "Edytuj";
             addEditEmployee.ShowDialog();
         }
@@ -90,7 +82,10 @@ namespace EmployeeDiary
             if (result == DialogResult.Yes)
             {
                 FireAnEmployee(selectedEmployeeID);
-                MessageBox.Show($"Gratulacje! W łatwy sposób {selectedEmployee.Cells[1].Value} {selectedEmployee.Cells[2].Value} został pozbawiony pracy."); // zostawiłem tak nie bez powodu. Dlaczego wartości w klamrach tutaj dają null exception?
+                MessageBox.Show($"Gratulacje! W łatwy sposób {selectedEmployee.Cells[1].Value} {selectedEmployee.Cells[2].Value} został pozbawiony pracy."); // zostawiłem tak nie bez powodu.
+                                                                                                                                                             // Dlaczego wartości w klamrach tutaj dają null exception? kiedy wpiszę całą ścieżkę bez
+                                                                                                                                                             // pośrednictwa zmiennej to zadziała. dlatego też dołożyłem selectedEmployeeID,
+                                                                                                                                                             // żeby mi metoda do zwalniania zadziałała
                 LoadDataToGrid();
             }
         }
